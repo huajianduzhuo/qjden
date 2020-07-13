@@ -3,6 +3,9 @@
   font-size: 16px;
   font-weight: bold;
 }
+.el-drawer {
+  overflow: auto;
+}
 @media only screen and (min-width: 768px) {
   .el-timeline {
     transform: translateX(50%);
