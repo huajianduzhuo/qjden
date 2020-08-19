@@ -10,7 +10,7 @@
         :class="{'timeline-left': index % 2 === 1}"
         :timestamp="timeline.timestamp">
         <el-card>
-          <span class="timeline-content">{{timeline.content}}</span>
+          <div class="timeline-content" v-for="(cont, index) in timeline.content" :key="index">{{cont}}</div>
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -51,19 +51,7 @@ export default Vue.extend({
       allTimelineData: [],
       timelineData: [],
       characterFilter: false,
-      characters: [
-        {label: '乔一成', contents: ['一成']},
-        {label: '乔二强', contents: ['二强']},
-        {label: '乔三丽', contents: ['三丽']},
-        {label: '乔四美', contents: ['四美']},
-        {label: '乔七七', contents: ['七七']},
-        {label: '父亲乔志强', contents: ['乔志强']},
-        {label: '母亲魏淑英', contents: ['母亲', '魏淑英']},
-        {label: '二姨魏淑芳', contents: ['二姨', '魏淑芳']},
-        {label: '二姨夫齐志强', contents: ['二姨夫', '齐志强']},
-        {label: '齐唯民', contents: ['齐唯民']},
-        {label: '文清华', contents: ['文清华']},
-      ],
+      characters: [],
       characterSelected: '',
     }
   },
@@ -71,9 +59,14 @@ export default Vue.extend({
     changeCharacter(character) {
       if (this.characterSelected !== character.label) {
         this.characterSelected = character.label
-        this.timelineData = this.allTimelineData.filter(timeline => {
-          return character.contents.some(content => timeline.content.includes(content))
+        let timelineData = []
+        this.allTimelineData.forEach(timeline => {
+          let cont = timeline.content.filter(c => character.contents.some(charac => c.includes(charac)))
+          if (cont.length) {
+            timelineData.push({timestamp: timeline.timestamp, content: cont})
+          }
         })
+        this.timelineData = timelineData
       } else {
         this.characterSelected = ''
         this.timelineData = this.allTimelineData
@@ -86,12 +79,20 @@ export default Vue.extend({
       this.timelineData = res.data
       this.allTimelineData = res.data
     })
+    axios.get(`${process.env.BASE_URL}data/character.json`).then(res => {
+      this.characters = res.data
+    })
   },
 })
 </script>
 <style lang="scss" scoped>
 .timeline-content {
   white-space: pre-wrap;
+  margin-bottom: 15px;
+  vertical-align: middle;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .user-filter {
   position: fixed;
