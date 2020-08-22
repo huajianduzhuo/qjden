@@ -4,7 +4,6 @@ import router from './router';
 import store from './store';
 import {Timeline, TimelineItem, Card, Col, Row, Button, Drawer, Divider} from 'element-ui'
 import './registerServiceWorker';
-import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/index.scss'
 
 Vue.config.productionTip = false;
