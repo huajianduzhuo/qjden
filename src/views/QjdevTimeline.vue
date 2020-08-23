@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading.fullscreen="loading">
     <el-timeline>
       <el-timeline-item
         v-for="(timeline, index) in timelineData"
@@ -53,6 +53,7 @@ export default Vue.extend({
       characterFilter: false,
       characters: [],
       characterSelected: '',
+      loading: true
     }
   },
   methods: {
@@ -75,12 +76,14 @@ export default Vue.extend({
     },
   },
   created() {
-    axios.get(`${process.env.BASE_URL}data/timeline.json?${Date.now()}`).then(res => {
-      this.timelineData = res.data
-      this.allTimelineData = res.data
-    })
-    axios.get(`${process.env.BASE_URL}data/character.json?${Date.now()}`).then(res => {
-      this.characters = res.data
+    Promise.all([
+      axios.get(`${process.env.BASE_URL}data/timeline.json?${Date.now()}`),
+      axios.get(`${process.env.BASE_URL}data/character.json?${Date.now()}`)
+    ]).then(results => {
+      this.timelineData = results[0].data
+      this.allTimelineData = results[0].data
+      this.characters = results[1].data
+      this.loading = false
     })
   },
 })
