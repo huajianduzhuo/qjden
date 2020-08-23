@@ -75,11 +75,11 @@ export default Vue.extend({
     },
   },
   created() {
-    axios.get(`${process.env.BASE_URL}data/timeline.json`).then(res => {
+    axios.get(`${process.env.BASE_URL}data/timeline.json?${Date.now()}`).then(res => {
       this.timelineData = res.data
       this.allTimelineData = res.data
     })
-    axios.get(`${process.env.BASE_URL}data/character.json`).then(res => {
+    axios.get(`${process.env.BASE_URL}data/character.json?${Date.now()}`).then(res => {
       this.characters = res.data
     })
   },
