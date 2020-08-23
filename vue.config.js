@@ -3,7 +3,9 @@ module.exports = {
   productionSourceMap: false,
   pwa: {
     workboxOptions: {
-      exclude: []
+      exclude: [
+        /\.json$/
+      ]
     },
     manifestPath: './public/manifest.json',
     iconPaths: {
