@@ -33,7 +33,7 @@
           v-for="(character, index) in characters"
           @click="changeCharacter(character)"
           :key="character.label">
-          <img class="character-icon" :src="`/images/${character.icon}`" alt="icon">
+          <img class="character-icon" :src="`${publicPath}images/${character.icon}`" alt="icon">
           <div class="character-label">
             {{character.label}}
           </div>
@@ -49,6 +49,7 @@ import axios from 'axios'
 export default Vue.extend({
   data() {
     return {
+      publicPath: process.env.BASE_URL,
       allTimelineData: [],
       timelineData: [],
       characterFilter: false,
