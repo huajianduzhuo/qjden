@@ -33,10 +33,11 @@
           v-for="(character, index) in characters"
           @click="changeCharacter(character)"
           :key="character.label">
+          <img class="character-icon" :src="`/images/${character.icon}`" alt="icon">
           <div class="character-label">
             {{character.label}}
           </div>
-          <el-divider v-if="index !== characters.length - 1"></el-divider>
+          <!-- <el-divider v-if="index !== characters.length - 1"></el-divider> -->
         </div>
       </div>
     </el-drawer>
@@ -112,13 +113,21 @@ export default Vue.extend({
   border-bottom: 1px solid #00adef;
 }
 .character-wrap {
-  padding: 30px 0;
 }
 .character-item {
-  width: 100%;
-  padding-left: 8%;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  margin: 0 0 0 8%;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border-bottom: 1px #ececec solid;
+  .character-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
   .character-label {
     margin-left: 10px;
   }
